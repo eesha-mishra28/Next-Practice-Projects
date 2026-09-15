@@ -1,36 +1,264 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Next.js Learning Progress
+1. Next.js Basics ⭐
+What is Next.js?
+React vs Next.js
+Why use Next.js?
+Benefits: routing, rendering, SEO, server-side features
+2. Rendering ⭐🔥
 
-## Getting Started
+Learned:
 
-First, run the development server:
+CSR — Client-Side Rendering
+SSR — Server-Side Rendering
+SSG — Static Site Generation
+ISR — Incremental Static Regeneration
+Difference between CSR, SSR, SSG and ISR
+Hydration
+Simple understanding
+CSR → Browser creates UI
+SSR → Server creates page when requested
+SSG → Page created beforehand
+ISR → Page created beforehand + updated after a set time
+Hydration → React makes the HTML interactive
+Practical work completed
+/csr → Counter using useState
+/ssr → Server-side data/time example
+/ssg → Static page
+/isr → revalidate example
+3. Server & Client Components ⭐🔥
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Learned:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Server Components are the default
+"use client" creates a Client Component
+When to use Client Components
+useState, events and browser features need Client Components
+fetch() can be used in Server Components
+4. App Router & Folder Structure ⭐
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Learned:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+app/page.tsx
 
-## Learn More
+→ /
 
-To learn more about Next.js, take a look at the following resources:
+app/about/page.tsx
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+→ /about
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+app/layout.tsx
 
-## Deploy on Vercel
+→ Shared layout
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Learned:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+page.tsx
+layout.tsx
+children
+Route-based folder structure
+5. Dynamic Routes ⭐🔥
+
+Created:
+
+app/products/[id]/page.tsx
+
+Example:
+
+/products/101
+/products/202
+/products/303
+
+One [id] page handles all these IDs.
+
+Learned:
+
+Dynamic route [id]
+params
+6. Catch-All Routes 🔥
+
+Created:
+
+app/blog/[...slug]/page.tsx
+
+Example:
+
+/blog/react
+/blog/react/nextjs
+/blog/react/nextjs/routing
+
+Learned:
+
+[...slug]
+slug is an array
+slug.join("/")
+7. Optional Catch-All Routes 🔥
+
+Created:
+
+app/docs/[[...slug]]/page.tsx
+
+Handles:
+
+/docs
+/docs/react
+/docs/react/nextjs
+
+Learned:
+
+[[...slug]]
+Slug can be undefined
+8. Route Groups 🔥
+
+Learned:
+
+app/(auth)/login/page.tsx
+
+URL:
+
+/login
+
+(auth) does not appear in the URL.
+
+9. Navigation ⭐🔥
+
+Learned:
+
+Link
+import Link from "next/link";
+
+<Link href="/about">About</Link>
+
+Used for normal navigation.
+
+useRouter
+"use client";
+
+import { useRouter } from "next/navigation";
+
+const router = useRouter();
+
+router.push("/dashboard");
+
+Used when navigation happens through code.
+
+Also learned:
+router.back()
+usePathname()
+useSearchParams()
+Practical components created:
+NavigationButton.tsx
+CurrentPath.tsx
+ProductFilters.tsx
+10. Search Params 🔥
+
+Example:
+
+/products/101?category=mobile&sort=price
+
+Learned:
+
+searchParams.get("category")
+searchParams.get("sort")
+
+Can get:
+
+category → mobile
+sort → price
+11. Data Fetching ⭐🔥
+
+Learned:
+
+const response = await fetch("API_URL");
+const data = await response.json();
+
+Also learned:
+
+Fresh data
+fetch("API_URL", {
+  cache: "no-store",
+});
+Revalidate
+fetch("API_URL", {
+  next: {
+    revalidate: 60,
+  },
+});
+Sequential vs Parallel
+
+Sequential:
+
+API 1 → wait → API 2
+
+Parallel:
+
+Promise.all([
+  fetchUsers(),
+  fetchProducts(),
+]);
+12. Rendering Lists ⭐
+
+Learned:
+
+data.map((post) => (
+  <p key={post.id}>{post.title}</p>
+))
+map() → display multiple items
+key → helps React identify each item
+13. Special Files ⭐
+
+Learned:
+
+loading.tsx
+
+Shows while page is loading.
+
+error.tsx
+
+Shows when something goes wrong.
+
+not-found.tsx
+
+Shows when something doesn't exist.
+
+Also learned:
+
+import { notFound } from "next/navigation";
+
+notFound();
+🛠️ Practical Project Progress
+
+Current practice project:
+
+practice-it
+
+Routes created/practiced:
+
+/
+├── about
+├── csr
+├── ssr
+├── ssg
+├── isr
+├── product/[id]
+├── blog/[...slug]
+└── docs/[[...slug]]
+
+Also practiced:
+
+Layout
+Navigation
+Dynamic routes
+Catch-all routes
+Search parameters
+Client components
+Server components
+API fetching
+Rendering concepts
+Build process
+Production build
+
+Successfully ran:
+
+npm run build
+
+and Next.js successfully generated the production build. ✅
